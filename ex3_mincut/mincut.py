@@ -15,7 +15,7 @@ def contract(vertexs, edges, cuts, e):
         v = find_root(cuts, v)
         if (u != v):
             break
-        e = (e + 1) % len(edges)
+        e = randint(0, len(edges)-1)
     
     
     if len(vertexs.get(u, [])) > len(vertexs.get(v, [])):
@@ -26,11 +26,7 @@ def contract(vertexs, edges, cuts, e):
 
     
     cuts[v] = w    
-    if (v != w):
-        for k, z in vertexs.get(v, []):
-            if (find_root(cuts,z) != w):
-                vertexs[w].append((k,z))
-        del vertexs[v]
+
     #print e, v, cuts[v]
         
         
@@ -44,12 +40,13 @@ def karger_min_cut(vertexs, edges):
         contract(vertexs, edges, cuts, edges_index)
         #print G, edges
 
-    assert(len(vertexs) == 2)
-    u = vertexs.keys()[0]
+    #assert(len(vertexs) == 2)
+    #u = vertexs.keys()[0]
     #assert(len(vertexs[u]) == len(vertexs[v]))
 
     #before returning the cuts list, we must remove the self loops from the adjacency list 
-    return filter(lambda (k, z): cuts[z] != cuts[k], vertexs[u])     
+    #return filter(lambda (k, z): cuts[z] != cuts[k], vertexs[u])  
+    return filter(lambda (k, z): (find_root(cuts,z) != find_root(cuts,k)) and (k < z), edges)
     
 
 def main():
@@ -64,7 +61,7 @@ def main():
                 edges.append((v, vals[i]))
     
     n = len(vertexs)
-    N = int(2*n)
+    N = int(n*n)
     min_cut_len = float('inf')
     min_cut = []       
     seed()
