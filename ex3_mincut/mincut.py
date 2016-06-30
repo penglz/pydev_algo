@@ -64,7 +64,7 @@ def main():
                 edges.append((v, vals[i]))
     
     n = len(vertexs)
-    N = int(n)
+    N = int(2*n)
     min_cut_len = float('inf')
     min_cut = []       
     seed()
