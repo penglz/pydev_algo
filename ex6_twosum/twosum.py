@@ -10,19 +10,35 @@ def main():
     with open('./2sum.txt', 'r') as f:
         iarray = map(int, f.readlines())
 
-    myset = frozenset(iarray)  
-    mysum = 0
+    myset = set(iarray)
+    iarray = sorted(myset)  
  
-    for t in range(-10000,10001):
-        for x in myset:
-            if t - x in myset and t - x != x:
-                mysum += 1
-                break
-        if t%1000==0:
-            print t, 'done'
+    i = 0
+    j = len(iarray) - 1
+    lasti = i
+    lastj = j
+    
+    myhash = {}
+    while i < j:
+        t = iarray[i] + iarray[j]
+        if t > 10000:
+            lastj = j
+            j -= 1
+        elif t < -10000:
+            lasti = i
+            i += 1
+            j = lastj 
+        else:
+            myhash[t] = True 
+            if j < lastj:
+                j -= 1
+            else:
+                i += 1
+            
+
 
                    
-    print mysum
+    print len(myhash.keys())
 
     #iarray = [1, 2, 3, 4, 5, 6, 7, 8]
 
