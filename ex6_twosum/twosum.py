@@ -15,7 +15,6 @@ def main():
  
     i = 0
     j = len(iarray) - 1
-    lasti = i
     lastj = j
     
     myhash = {}
@@ -25,7 +24,6 @@ def main():
             lastj = j
             j -= 1
         elif t < -10000:
-            lasti = i
             i += 1
             j = lastj 
         else:
